@@ -1,0 +1,50 @@
+table {
+  /* width: 100%; */
+  margin : 50px;
+  border-collapse: collapse;
+        position: relative;
+}
+td{
+  width: 75px;
+  height: 75px;
+  border: 1px solid black;
+}
+
+.item {
+  position: absolute;
+  width: 60px;
+  height: 70px;
+}
+
+#robot {
+  position: absolute;
+  top: 60px;
+  left: 50px;
+  width: 60px;
+  height: 70px;
+  display: none;
+}
+#hazard {
+  position: absolute;
+  top: 60px;
+  left: 50px;
+  width: 60px;
+  height: 70px;
+  display: none;
+}
+#predefined {
+  position: absolute;
+  top: 60px;
+  left: 50px;
+  width: 60px;
+  height: 70px;
+  display: none;
+}
+#colorblob {
+  position: absolute;
+  top: 60px;
+  left: 50px;
+  width: 60px;
+  height: 70px;
+  display: none;
+}

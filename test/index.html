@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>2D Array Drawing</title>
+  <link rel="stylesheet" href="aa.css" />
+</head>
+<body>
+  <input id="rowInput" type="number" placeholder="행의 수를 입력하세요">
+  <input id="colInput" type="number" placeholder="열의 수를 입력하세요">
+  <button onclick="createTable()">표 생성</button>
+  <div id="tableContainer"></div>
+  <input id="robotPositionInput" type="text" placeholder="로봇 시작 좌표 (예: 0,0)">
+  <button onclick="setRobotPosition()">로봇 위치 설정</button>
+  <input id="colorblobInput" type="text" placeholder="colorblob 좌표 (예: 1,1)">
+  <button onclick="placeColorblob()">colorblob 추가</button>
+  <input id="hazardInput" type="text" placeholder="hazard 좌표 (예: 2,2)">
+  <button onclick="placeHazard()">hazard 추가</button>
+  <input id="predefinedInput" type="text" placeholder="predefined 좌표 (예: 3,3)">
+  <button onclick="placePredefined()">predefined 추가</button>
+  <img id="colorblob" class="item" src="./includes/color.png">
+  <img id="hazard" class="item" src="./includes/hazard.png">
+  <img id="predefined" class="item" src="./includes/predefined.png">
+  <img id="robot" src="./includes/robot.png"> <!-- 로봇 이미지 추가 -->
+  <input id="directionInput" type="text" placeholder="N, E, W, S 중 입력하세요">
+  <button onclick="moveRobot()">로봇 이동</button>
+  <div id="tableContainer"></div>
+
+  <script src="main.js"></script>
+  </script>
+</body>
+</html>
