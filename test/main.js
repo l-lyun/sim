@@ -104,48 +104,76 @@ const placePredefined = () => {
     predefindeds.push(newPredefined);
 }
 
-let currentDirection = 90;
+// console.log('Eeeeee');
+let currentDirection = 'E';
+const direction = ['N', 'E', 'S', 'W'];
 const moveRobot = () => {
-    // 로봇 이미지를 선택합니다.
+    // console.log(currentDirection);
     let robot = document.getElementById('robot');
-
-    // 사용자가 입력한 방향을 가져옵니다.
     let targetDirection = document.getElementById('directionInput').value.toUpperCase();
-
-    // 현재 로봇의 위치를 가져옵니다.
     let top = parseInt(robot.style.top) || 50;
     let left = parseInt(robot.style.left) || 30;
+    let toMove = (direction.indexOf(targetDirection) - direction.indexOf(currentDirection) + 4) % 4;
+    changeImage();
+    function changeImage() {
 
-    // 방향에 따라 로봇을 이동시킵니다.
-    // 여기서는 한번에 30픽셀 이동하도록 설정했습니다.
+    }
+    
+    for(let i = 1; i <= toMove; i++) {
+        setTimeout(function() {
+            robot.src = `./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.png`;
+        }, 500 * i);
+        console.log(`./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.png`);
+    }
+    // await rotateRobot(toMove * 90); // 비동기로 회전 적용
+
     switch (targetDirection) {
         case 'N':
-            // // while(currentDirection % 360 != 0) {
-            // //   robot.style.transform = `rotate(90deg)`;
-            //   currentDirection += 90;
-            // }
             robot.style.top = (top - 78) + 'px';
+            // robot.src = './includes/robot_N.png';
             break;
         case 'E':
             robot.style.left = (left + 78) + 'px';
+            // robot.src = './includes/robot_E.png';
             break;
         case 'W':
             robot.style.left = (left - 78) + 'px';
+            // robot.src = './includes/robot_W.png';
             break;
         case 'S':
             robot.style.top = (top + 78) + 'px';
+            // robot.src = './includes/robot_S.png';
             break;
     }
 
-   // 움직인 후에 predefined를 방문했는지 확인합니다.
-   isVisitedPredefined();
+    currentDirection = targetDirection;
+    console.log(currentDirection);
+    isVisitedPredefined();
 
-   // predefined를 방문했는지 확인하고, 모두 방문했다면 알림을 띄웁니다.
-   if (!predefinedVisited && isVisitedAllPredefindeds()) {
-       alert('탐색 완료!');
-       predefinedVisited = true;
-   }
-}
+    if (!predefinedVisited && isVisitedAllPredefindeds()) {
+        alert('탐색 완료!');
+        predefinedVisited = true;
+    }
+};
+
+// const rotateRobot = (totalAngle) => {
+    // return new Promise((resolve) => {
+    //     let robot = document.getElementById('robot');
+    //     let currentAngle = 0;
+
+    //     const rotateStep = () => {
+    //         if (currentAngle < totalAngle) {
+    //             currentAngle += 10; // 10도씩 회전
+    //             robot.style.transform = `rotate(${currentAngle}deg)`;
+    //             setTimeout(rotateStep, 10); // 10ms 간격으로 회전
+    //         } else {
+    //             resolve();
+    //         }
+    //     };
+
+    //     rotateStep();
+    // });
+// };
 
 const isVisitedAllPredefindeds = () => {
   // 모든 predefined가 방문되었는지 검사합니다.

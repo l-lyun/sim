@@ -23,6 +23,7 @@ td{
   width: 60px;
   height: 70px;
   display: none;
+  transition: transform 0.5s ease;
 }
 #hazard {
   position: absolute;
