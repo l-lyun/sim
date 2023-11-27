@@ -2,11 +2,11 @@ let predefinedVisited = false; // predefined를 방문했는지 여부를 저장
 let rows;
 let cols;
 const createTable = () => {
-    // 사용자가 입력한 행과 열의 수를 가져옵니다.
+    // 행 열 입력
     rows = document.getElementById('rowInput').value;
     cols = document.getElementById('colInput').value;
 
-    // 표를 생성합니다.
+    // 맵 생성
     let table = document.createElement('table');
     for (let i = 0; i < rows; i++) {
         let tr = document.createElement('tr');
@@ -17,7 +17,7 @@ const createTable = () => {
         table.appendChild(tr);
     }
 
-    // 생성된 표를 'tableContainer' div에 추가합니다.
+    // 테이블을 div 태그 추가
     document.getElementById('tableContainer').innerHTML = '';
     document.getElementById('tableContainer').appendChild(table);
 }
@@ -26,85 +26,86 @@ const setRobotPosition = () => {
     let robot = document.getElementById('robot');
     let position = document.getElementById('robotPositionInput').value.split(',');
 
-    // 좌표를 픽셀 단위로 변환합니다.
+    // 좌표 픽셀로 파싱
     let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
     let left = parseInt(position[0]) * 78 + 30;
  
-    // 로봇의 위치를 설정합니다.
+    // 초기 위치 픽셀로 찍기
     robot.style.top = top + 'px';
     robot.style.left = left + 'px';
     robot.style.display = 'block';
 }
 
-let predefindeds = []; // predefined들을 저장하는 배열
+let colorblobs = []; // colorblobs array
 
 const placeColorblob = () => {
     let position = document.getElementById('colorblobInput').value.split(',');
 
-    // colorblob 이미지를 새로 생성합니다.
+    // colorblob 생성
     let newColorblob = document.createElement('img');
     newColorblob.className = 'item';
     newColorblob.src = './includes/color.png';
 
-    // 좌표를 픽셀 단위로 변환합니다.
+    // 좌표 픽셀로 파싱
     let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
     let left = parseInt(position[0]) * 78 + 30;
 
-    // colorblob의 위치를 설정합니다.
+    // colorblob의 위치 설정
     newColorblob.style.top = top + 'px';
     newColorblob.style.left = left + 'px';
 
-    // 생성된 colorblob 이미지를 추가합니다.
+    // colorblob image 추가
     document.getElementById('tableContainer').appendChild(newColorblob);
+    colorblobs.push(newColorblob);
 }
+
+let hazards = []; // hazards array
 
 const placeHazard = () => {
     let position = document.getElementById('hazardInput').value.split(',');
 
-    // hazard 이미지를 새로 생성합니다.
+    // hazard 생성
     let newHazard = document.createElement('img');
     newHazard.className = 'item';
     newHazard.src = './includes/hazard.png';
 
-    // 좌표를 픽셀 단위로 변환합니다.
+    // 좌표를 픽셀로 파싱
     let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
     let left = parseInt(position[0]) * 78 + 30;
 
-    // hazard의 위치를 설정합니다.
+    // hazard의 위치를 설정
     newHazard.style.top = top + 'px';
     newHazard.style.left = left + 'px';
 
-    // 생성된 hazard 이미지를 추가합니다.
+    // hazard image 추가
     document.getElementById('tableContainer').appendChild(newHazard);
+    hazards.push(newHazard);
 }
-
+let predefindeds =[];
 const placePredefined = () => {
     let position = document.getElementById('predefinedInput').value.split(',');
 
-    // predefined 이미지를 새로 생성합니다.
+    // predefined 생성
     let newPredefined = document.createElement('img');
     newPredefined.className = 'item';
     newPredefined.src = './includes/predefined.png';
 
-    // 좌표를 픽셀 단위로 변환합니다.
+    // 좌표 픽셀로 파싱
     let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
     let left = parseInt(position[0]) * 78 + 30;
 
-    // predefined의 위치를 설정합니다.
+    // predefined의 위치를 설정
     newPredefined.style.top = top + 'px';
     newPredefined.style.left = left + 'px';
 
-    // 방문 여부를 저장하는 속성을 추가합니다.
+    // 지나갔는지 확인
     newPredefined.dataset.visited = 'false';
 
-    // 생성된 predefined 이미지를 추가합니다.
+    // predefined image 추가
     document.getElementById('tableContainer').appendChild(newPredefined);
-
-    // predefindeds 배열에 추가합니다.
     predefindeds.push(newPredefined);
 }
 
-// console.log('Eeeeee');
 let currentDirection = 'E';
 const direction = ['N', 'E', 'S', 'W'];
 const moveRobot = () => {
@@ -114,10 +115,11 @@ const moveRobot = () => {
     let top = parseInt(robot.style.top) || 50;
     let left = parseInt(robot.style.left) || 30;
     let toMove = (direction.indexOf(targetDirection) - direction.indexOf(currentDirection) + 4) % 4;
-    changeImage();
-    function changeImage() {
-
-    }
+    // changeImage();
+    // function changeImage() {
+    //     robot.src = `./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.png`;
+    //     console.log(`./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.png`);
+    // }
     
     for(let i = 1; i <= toMove; i++) {
         setTimeout(function() {
@@ -176,7 +178,7 @@ const moveRobot = () => {
 // };
 
 const isVisitedAllPredefindeds = () => {
-  // 모든 predefined가 방문되었는지 검사합니다.
+  // 모든 predefined 방문
   for (let predefined of predefindeds) {
       if (predefined.dataset.visited === 'false') {
           return false;
