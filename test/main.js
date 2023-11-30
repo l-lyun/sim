@@ -104,13 +104,7 @@ document.getElementById("moveButton").addEventListener("click", async () => {
       // "colorBlobs": ["4, 3", "2, 2"],
       // "endSpot": ["3, 4", "0, 1"]
     };
-    // {"n":6,"m":5,"startSpot":"0, 0","startDirection":"N","hazards":["3, 3","3, 2","1, 2"],"colorBlobs":["4, 3","2, 2"],"endSpot":["3, 4","0, 1"]} 기찬 양식 복사
-    // {"n":4,"m":4,"startSpot":"1, 2","startDirection":"E","hazards":["3, 3"],"colorBlobs":["2, 2"],"endSpot":["4, 4"]} 내가 보낸 값
-    // {"n":4,"m":4,"startSpot":"2, 1","startDirection":"E","hazards":["3, 3"],"colorBlobs":["2, 2"],"endSpot":["4, 4"]}
-    // {"n":4,"m":4,"startSpot":"2,  1","startDirection":"E","hazards":["3, 3"],"colorBlobs":["2, 2"],"endSpot":["4, 4"]}
     console.log(JSON.stringify(requestPayload));
-    // console.log(colorblobs[0]);
-    //   console.log(hazards);
     const response = await fetch("http://localhost:8080/robot/move", {
       method: "POST",
       headers: {
