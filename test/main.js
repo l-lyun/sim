@@ -57,21 +57,6 @@ const placeColorblob = () => {
   colorBlobsParsed = colorBlobs_coordinate.map((colorBlobs_coordinate) =>
     colorBlobs_coordinate.join(", ")
   );
-  // // colorblob 생성
-  // let newColorblob = document.createElement('img');
-  // newColorblob.className = 'item';
-  // newColorblob.src = './includes/color.png';
-
-  // // 좌표 픽셀로 파싱
-  // let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
-  // let left = parseInt(position[0]) * 78 + 30;
-
-  // // colorblob의 위치 설정
-  // newColorblob.style.top = top + 'px';
-  // newColorblob.style.left = left + 'px';
-
-  // // colorblob image 추가
-  // document.getElementById('tableContainer').appendChild(newColorblob);
   colorblobs.push(position);
 };
 
@@ -84,23 +69,9 @@ const placeHazard = () => {
   hazardsParsed = hazards_coordinate.map((hazards_coordinate) =>
     hazards_coordinate.join(", ")
   );
-  // hazard 생성
-  // let newHazard = document.createElement('img');
-  // newHazard.className = 'item';
-  // newHazard.src = './includes/hazard.png';
-
-  // // 좌표를 픽셀로 파싱
-  // let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
-  // let left = parseInt(position[0]) * 78 + 30;
-
-  // // hazard의 위치를 설정
-  // newHazard.style.top = top + 'px';
-  // newHazard.style.left = left + 'px';
-
-  // hazard image 추가
-  // document.getElementById('tableContainer').appendChild(newHazard);
   hazards.push(position);
 };
+
 let predefindeds = [];
 let predefindeds_coordinate = [];
 let predefindedsParsed;
@@ -110,25 +81,6 @@ const placePredefined = () => {
   predefindedsParsed = predefindeds_coordinate.map((predefindeds_coordinate) =>
     predefindeds_coordinate.join(", ")
   );
-  // .value.split(',')
-  // predefined 생성
-  // let newPredefined = document.createElement('img');
-  // newPredefined.className = 'item';
-  // newPredefined.src = './includes/predefined.png';
-
-  // // 좌표 픽셀로 파싱
-  // let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
-  // let left = parseInt(position[0]) * 78 + 30;
-
-  // // predefined의 위치를 설정
-  // newPredefined.style.top = top + 'px';
-  // newPredefined.style.left = left + 'px';
-
-  // 지나갔는지 확인
-  // newPredefined.dataset.visited = 'false';
-
-  // predefined image 추가
-  // document.getElementById('tableContainer').appendChild(newPredefined);
   predefindeds.push(position);
 };
 
@@ -234,7 +186,7 @@ function rotate(direction) {
 }
 
 function findColor(locateColor) {
-  if (locateColor.length !== "") {
+  if (locateColor.length !== 0) {
     for (let i = 0; i < locateColor.length; i += 5) {
       let newColor = document.createElement("img");
       newColor.className = "item";
@@ -248,7 +200,7 @@ function findColor(locateColor) {
   }
 }
 function findHazard(locateHazard) {
-  if (locateHazard.length !== "") {
+  if (locateHazard.length !== 0) {
     let newHazard = document.createElement("img");
     newHazard.className = "item";
     newHazard.src = "./includes/hazard.png";
