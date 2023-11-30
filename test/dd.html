@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Input Example</title>
+</head>
+<body>
+
+  <form id="userInputForm">
+    <label for="userInput">값 입력:</label>
+    <input type="text" id="userInput" name="userInput">
+    <button type="button" onclick="handleUserInput()">입력 확인</button>
+  </form>
+
+  <script>
+    let predefindeds =[];
+    function handleUserInput() {
+      
+      let userInput = document.getElementById('userInput').value;
+      console.log("사용자 입력:", userInput);
+      predefindeds.push(userInput);
+      for(let i = 0; i < predefindeds.length; i++) {
+        console.log(predefindeds[i]);
+        console.log(i);
+        console.log(predefindeds);
+      }
+      // 여기서 필요한 작업을 수행하세요.
+    }
+  </script>
+
+</body>
+</html>
