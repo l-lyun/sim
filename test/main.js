@@ -50,120 +50,236 @@ const setRobotPosition = () => {
 
 let colorblobs = []; // colorblobs array
 let colorBlobs_coordinate = [];
-let colorBlobsParsed;
-const placeColorblob = () => {
+let colorBlobsParsed = [];
+
+function newPlaceColorblob(position) {
+  let grayColorblob = document.createElement("img");
+  grayColorblob.className = "item";
+  grayColorblob.src = "./includes/color_gray.png";
+
+  // 좌표를 픽셀 단위로 변환합니다.
+  let top = 50 + rows * 78 - parseInt(position[1]) * 78;
+  let left = parseInt(position[0]) * 78 + 30;
+
+  // colorblob의 위치를 설정합니다.
+  grayColorblob.style.top = top + "px";
+  grayColorblob.style.left = left + "px";
+  document.getElementById("tableContainer").appendChild(grayColorblob);
+
+  colorblobs.push(position);
+}
+
+function placeColorblob() {
   let position = document.getElementById("colorblobInput").value.split(",");
   colorBlobs_coordinate.push(position);
   colorBlobsParsed = colorBlobs_coordinate.map((colorBlobs_coordinate) =>
     colorBlobs_coordinate.join(", ")
   );
 
+  newPlaceColorblob(position);
+}
 
-  let grayColorblob = document.createElement('img');
-  grayColorblob.className = 'item';
-  grayColorblob.src = './includes/color_gray.png';
-
-  // 좌표를 픽셀 단위로 변환합니다.
-  let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
-  let left = parseInt(position[0]) * 78 + 30;
-
- // colorblob의 위치를 설정합니다.
-    grayColorblob.style.top = top + 'px';
-    grayColorblob.style.left = left + 'px';
-    document.getElementById('tableContainer').appendChild(grayColorblob);
-
-  colorblobs.push(position);
-};
+//Hazard
 
 let hazards = []; // hazards array
 let hazards_coordinate = [];
-let hazardsParsed;
-const placeHazard = () => {
+let hazardsParsed = [];
+
+function newPlaceHazard(position) {
+  let grayHazard = document.createElement("img");
+  grayHazard.className = "item";
+  grayHazard.src = "./includes/hazard_gray.png";
+
+  // 좌표를 픽셀 단위로 변환합니다.
+  let top = 50 + rows * 78 - parseInt(position[1]) * 78;
+  let left = parseInt(position[0]) * 78 + 30;
+
+  // colorblob의 위치를 설정합니다.
+  grayHazard.style.top = top + "px";
+  grayHazard.style.left = left + "px";
+  document.getElementById("tableContainer").appendChild(grayHazard);
+
+  hazards.push(position);
+}
+
+function placeHazard() {
   let position = document.getElementById("hazardInput").value.split(",");
   hazards_coordinate.push(position);
   hazardsParsed = hazards_coordinate.map((hazards_coordinate) =>
     hazards_coordinate.join(", ")
   );
+  newPlaceHazard(position);
+}
 
-  let grayHazard = document.createElement('img');
-  grayHazard.className = 'item';
-  grayHazard.src = './includes/hazard_gray.png';
+// const placeHazard = () => {
+//   let position = document.getElementById("hazardInput").value.split(",");
+//   hazards_coordinate.push(position);
+//   hazardsParsed = hazards_coordinate.map((hazards_coordinate) =>
+//     hazards_coordinate.join(", ")
+//   );
 
-  // 좌표를 픽셀 단위로 변환합니다.
-  let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
-  let left = parseInt(position[0]) * 78 + 30;
+//   let grayHazard = document.createElement("img");
+//   grayHazard.className = "item";
+//   grayHazard.src = "./includes/hazard_gray.png";
 
- // colorblob의 위치를 설정합니다.
-    grayHazard.style.top = top + 'px';
-    grayHazard.style.left = left + 'px';
-    document.getElementById('tableContainer').appendChild(grayHazard);
+//   // 좌표를 픽셀 단위로 변환합니다.
+//   let top = 50 + rows * 78 - parseInt(position[1]) * 78;
+//   let left = parseInt(position[0]) * 78 + 30;
 
+//   // colorblob의 위치를 설정합니다.
+//   grayHazard.style.top = top + "px";
+//   grayHazard.style.left = left + "px";
+//   document.getElementById("tableContainer").appendChild(grayHazard);
 
-  hazards.push(position);
-};
+//   hazards.push(position);
+// };
 
 let predefindeds = [];
 let predefindeds_coordinate = [];
-let predefindedsParsed;
+let predefindedsParsed = [];
 const placePredefined = () => {
   let position = document.getElementById("predefinedInput").value.split(",");
   predefindeds_coordinate.push(position);
+  console.log(position);
   predefindedsParsed = predefindeds_coordinate.map((predefindeds_coordinate) =>
     predefindeds_coordinate.join(", ")
   );
 
-  let graypredefined = document.createElement('img');
-  graypredefined.className = 'item';
-  graypredefined.src = './includes/predefined_gray.png';
+  let graypredefined = document.createElement("img");
+  graypredefined.className = "item";
+  graypredefined.src = "./includes/predefined_gray.png";
 
   // 좌표를 픽셀 단위로 변환합니다.
-  let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
+  let top = 50 + rows * 78 - parseInt(position[1]) * 78;
   let left = parseInt(position[0]) * 78 + 30;
 
- // colorblob의 위치를 설정합니다.
-    graypredefined.style.top = top + 'px';
-    graypredefined.style.left = left + 'px';
-    document.getElementById('tableContainer').appendChild(graypredefined);
+  // colorblob의 위치를 설정합니다.
+  graypredefined.style.top = top + "px";
+  graypredefined.style.left = left + "px";
+  document.getElementById("tableContainer").appendChild(graypredefined);
 
   predefindeds.push(position);
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-  const startButton = document.getElementById('recognitonStart');
-  
-  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+// 음성 인식 시작 이벤트 리스너
+document
+  .getElementById("recognitionStart")
+  .addEventListener("click", function () {
+    clearInterval(gogoInterval); // gogo 함수 실행 중지
 
-  recognition.continuous = true;
-  recognition.lang = 'ko-KR'; // 언어 설정 (영어)
+    recognition.continuous = true;
+    recognition.lang = "ko-KR"; // 언어 설정 (영어)
+    recognition.start();
 
-  // 음성 인식 시작 이벤트 리스너
-  startButton.addEventListener('click', function() {
-      recognition.start();
+    recognition.onresult = function (event) {
+      const result = event.results[0][0].transcript;
+      recognitionParse(result);
+      // console.log(result);
+      // console.log(result[0]);
+      // console.log(result[1]);
+      // console.log(result[2]);
+      // console.log(result[3]);
+      // console.log(result[4]);
+      // console.log(result.length);
+    };
   });
-  // 결과 이벤트 리스너
-  recognition.onresult = function(event) {
-    const result = eventresults[0][0].transcript;
-    resultElement.textContent = '인식된 텍스트: ' + result;
-    console.log(result);
-    console.log(result[0]); 
-    console.log(result[1]); 
-    console.log(result[2]); 
-    console.log(result[3]); 
-    console.log(result[4]); 
-    console.log(result.length);
-};
-})
 
+colorDictionary = ["중", "종", "정", "죵", "즁"];
+
+hazardDictionary = ["위", "이"];
+
+digitDictionary = [
+  "영",
+  "일",
+  "이",
+  "삼",
+  "사",
+  "오",
+  "육",
+  "칠",
+  "팔",
+  "구",
+  "십",
+];
+
+function recognitionSpot(recognitionParse) {
+  let position = [recognitionParse[2], recognitionParse[3]];
+  for (let i = 0; i < colorDictionary.length; i++) {
+    if (recognitionParse[0] === colorDictionary[i]) {
+      colorBlobs_coordinate.push(position);
+      // console.log(position);
+      colorBlobsParsed = colorBlobs_coordinate.map((colorBlobs_coordinate) =>
+        colorBlobs_coordinate.join(", ")
+      );
+      newPlaceColorblob(position);
+      return;
+    }
+  }
+  for (let i = 0; i < hazardDictionary.length; i++) {
+    if (recognitionParse[0] === hazardDictionary[i]) {
+      hazards_coordinate.push(position);
+  hazardsParsed = hazards_coordinate.map((hazards_coordinate) =>
+    hazards_coordinate.join(", ")
+  );
+      newPlaceHazard(position);
+      return;
+    }
+  }
+}
+
+function checkRecognition(recognitionParse) {
+  console.log(recognitionParse);
+
+  if (recognitionParse.length === 4) {
+    if (isNaN(recognitionParse[2]) || isNaN(recognitionParse[3])) {
+      alert("잘못된 입력입니다.");
+      return;
+    } else {
+      recognitionSpot(recognitionParse);
+    }
+  } else { 
+    alert("잘못된 입력입니다.");
+    // console.log(resultParse);
+  }
+}
+
+function recognitionParse(result) {
+  let resultParse = [];
+  console.log("result: " + result);
+  for (let i = 0; i < result.length; i++) {
+    if (result[i] !== " ") {
+      resultParse.push(result[i]);
+    }
+  }
+  for (let i = 0; i < digitDictionary.length; i++) {
+    if (resultParse[2] === digitDictionary[i]) {
+      resultParse[2] = String(i);
+    }
+    if (resultParse[3] === digitDictionary[i]) {
+      resultParse[3] = String(i);
+    }
+  }
+  checkRecognition(resultParse);
+}
+
+document
+  .getElementById("recognitionStop")
+  .addEventListener("click", function () {
+    recognition.stop();
+    // postData();
+  });
+// 결과 이벤트 리스너
 
 let currentDirection = "E";
-let gogoInterval; 
+let gogoInterval;
 const direction = ["N", "E", "S", "W"];
-document.getElementById("moveButton").addEventListener("click", async () => {
+async function postData() {
   try {
     const requestPayload = {
       n: parseInt(cols),
       m: parseInt(rows),
-      startSpot: `${robotPosition[0]}, ${robotPosition[1]}`, // 여기 수정
+      startSpot: `${current_x}, ${current_y}`, // 여기 수정
       startDirection: currentDirection,
       hazards: hazardsParsed,
       colorBlobs: colorBlobsParsed, // 여기 수정
@@ -176,6 +292,7 @@ document.getElementById("moveButton").addEventListener("click", async () => {
       // "colorBlobs": ["4, 3", "2, 2"],
       // "endSpot": ["3, 4", "0, 1"]
     };
+    console.log(hazardsParsed);
     console.log(JSON.stringify(requestPayload));
     const response = await fetch("http://localhost:8080/robot/move", {
       method: "POST",
@@ -204,30 +321,85 @@ document.getElementById("moveButton").addEventListener("click", async () => {
   } catch (error) {
     console.error("Error during POST Request:", error);
   }
-});
+}
+document.getElementById("moveButton").addEventListener("click", postData);
 
+// document.getElementById("moveButton").addEventListener("click", async () => {
+//   try {
+//     const requestPayload = {
+//       n: parseInt(cols),
+//       m: parseInt(rows),
+//       startSpot: `${robotPosition[0]}, ${robotPosition[1]}`, // 여기 수정
+//       startDirection: currentDirection,
+//       hazards: hazardsParsed,
+//       colorBlobs: colorBlobsParsed, // 여기 수정
+//       endSpot: predefindedsParsed,
+//       // "n": 6,
+//       // "m": 5,
+//       // "startSpot": "0, 0",
+//       // "startDirection": "N",
+//       // "hazards": ["3, 3", "3, 2", "1, 2"],
+//       // "colorBlobs": ["4, 3", "2, 2"],
+//       // "endSpot": ["3, 4", "0, 1"]
+//     };
+//     console.log(JSON.stringify(requestPayload));
+//     const response = await fetch("http://localhost:8080/robot/move", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(requestPayload),
+//     });
 
+//     if (response.ok) {
+//       // 서버에서 받은 데이터 활용 예시
+//       const responseData = await response.json();
+//       const finalInfo = responseData.finalInfo;
+//       console.log(finalInfo);
+//       // 예시: finalInfo 데이터를 콘솔에 출력
+//       // finalInfo.forEach(info => {
+//       //   console.log('Info:', info);
+//       // });
+
+//       // 원하는 작업 수행
+//       // ...
+//       startGogo(finalInfo);
+//     } else {
+//       console.error("Error during POST Request. HTTP Status:", response.status);
+//     }
+//   } catch (error) {
+//     console.error("Error during POST Request:", error);
+//   }
+// });
+// document.getElementById("recognitionStart").addEventListener("click", () => {
+//   clearInterval(intervalId); // 추가된 부분: gogo 함수 실행 중지
+// });
 
 function startGogo(finalInfo) {
-  for (let i = 0; i < finalInfo.length; i++) {
-    let row = finalInfo[i][0];
-    let col = finalInfo[i][1];
-    // console.log(parseInt(col));
-    let cu_direction = finalInfo[i][2];
-    let locateColor = finalInfo[i][3];
-    let locateHazard = finalInfo[i][4];
-    let fin = finalInfo[i][5];
+  let i = 0;
+  gogoInterval = setInterval(() => {
+    if (i < finalInfo.length) {
+      let row = finalInfo[i][0];
+      let col = finalInfo[i][1];
+      // console.log(parseInt(col));
+      let cu_direction = finalInfo[i][2];
+      let locateColor = finalInfo[i][3];
+      let locateHazard = finalInfo[i][4];
+      let fin = finalInfo[i][5];
 
-    // 각 함수를 일정한 간격으로 실행
-    setTimeout(() => {
       findHazard(locateHazard);
       findColor(locateColor);
       rotate(cu_direction);
       move(row, col);
       visitied(fin);
-    }, i * 1000); // i번째 함수를 실행하기 전에 1000ms (1초) 간격을 두고 실행
-  }
+
+      i++;
+    } else {
+      clearInterval(gogoInterval); // 모든 동작이 완료되면 interval 정지
+    }
+  }, 1000);
 }
+
 // let row = finalInfo[0][0];
 // console.log(parseInt(row));
 // let col = finalInfo[1];
@@ -250,7 +422,7 @@ function move(next_row, next_col) {
   current_y = parseInt(next_col);
 }
 function rotate(direction) {
-  // currentDirection = direction;
+  currentDirection = direction;
   robot.src = `./includes/robot_${direction}.jpeg`;
 }
 
@@ -289,17 +461,12 @@ function visitied(fin) {
     let newpredefined = document.createElement("img");
     newpredefined.className = "item";
     newpredefined.src = "./includes/predefined.png";
-    let top = 50 + rows * 78 - (parseInt(current_y)) * 78;
+    let top = 50 + rows * 78 - parseInt(current_y) * 78;
     let left = parseInt(current_x) * 78 + 30;
-    console.log("top: " + top);
-    console.log("left: " + left);
-    console.log("current_x: " + current_x);
-    console.log("current_y: " + current_y);
     newpredefined.style.top = top + "px";
     newpredefined.style.left = left + "px";
     document.getElementById("tableContainer").appendChild(newpredefined);
-    alert("탐색 완료!")
-
+    alert("탐색 완료!");
   }
 }
 

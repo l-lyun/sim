@@ -9,16 +9,18 @@
 
 <h1>음성 인식 예제</h1>
 <button id="startButton">음성 입력 시작</button>
+<button id="stopButton">음성 입력 중지</button>
 <p id="result"></p>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const startButton = document.getElementById('startButton');
     const resultElement = document.getElementById('result');
-
+    const stopButton = document.getElementById('stopButton');
     // 음성 인식을 위한 객체 생성
     const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
 
+    console.log(recognition);
     // 음성 인식 옵션 설정
     recognition.continuous = true;
     recognition.lang = 'ko-KR'; // 언어 설정 (영어)
@@ -27,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
     startButton.addEventListener('click', function() {
         recognition.start();
         resultElement.textContent = '음성 입력을 기다리는 중...';
+    });
+    stopButton.addEventListener('click', function() {
+        recognition.stop();
+        resultElement.textContent = '음성 입력이 정지되었습니다.';
     });
 
     // 음성 인식 결과 이벤트 리스너
@@ -39,7 +45,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(result[2]); 
         console.log(result[3]); 
         console.log(result[4]); 
+        console.log(result[5]); 
         console.log(result.length);
+        console.log(isNaN(result[0]));
+        console.log(isNaN(result[1]));
+        console.log(isNaN(result[3]));
+        console.log(isNaN(result[5]));
     };
 
     // 음성 인식 에러 이벤트 리스너
