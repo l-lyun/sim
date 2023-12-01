@@ -57,6 +57,21 @@ const placeColorblob = () => {
   colorBlobsParsed = colorBlobs_coordinate.map((colorBlobs_coordinate) =>
     colorBlobs_coordinate.join(", ")
   );
+
+
+  let grayColorblob = document.createElement('img');
+  grayColorblob.className = 'item';
+  grayColorblob.src = './includes/color_gray.png';
+
+  // 좌표를 픽셀 단위로 변환합니다.
+  let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
+  let left = parseInt(position[0]) * 78 + 30;
+
+ // colorblob의 위치를 설정합니다.
+    grayColorblob.style.top = top + 'px';
+    grayColorblob.style.left = left + 'px';
+    document.getElementById('tableContainer').appendChild(grayColorblob);
+
   colorblobs.push(position);
 };
 
@@ -69,6 +84,21 @@ const placeHazard = () => {
   hazardsParsed = hazards_coordinate.map((hazards_coordinate) =>
     hazards_coordinate.join(", ")
   );
+
+  let grayHazard = document.createElement('img');
+  grayHazard.className = 'item';
+  grayHazard.src = './includes/hazard_gray.png';
+
+  // 좌표를 픽셀 단위로 변환합니다.
+  let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
+  let left = parseInt(position[0]) * 78 + 30;
+
+ // colorblob의 위치를 설정합니다.
+    grayHazard.style.top = top + 'px';
+    grayHazard.style.left = left + 'px';
+    document.getElementById('tableContainer').appendChild(grayHazard);
+
+
   hazards.push(position);
 };
 
@@ -81,8 +111,49 @@ const placePredefined = () => {
   predefindedsParsed = predefindeds_coordinate.map((predefindeds_coordinate) =>
     predefindeds_coordinate.join(", ")
   );
+
+  let graypredefined = document.createElement('img');
+  graypredefined.className = 'item';
+  graypredefined.src = './includes/predefined_gray.png';
+
+  // 좌표를 픽셀 단위로 변환합니다.
+  let top =  (50 + ( rows * 78)) - parseInt(position[1]) * 78;
+  let left = parseInt(position[0]) * 78 + 30;
+
+ // colorblob의 위치를 설정합니다.
+    graypredefined.style.top = top + 'px';
+    graypredefined.style.left = left + 'px';
+    document.getElementById('tableContainer').appendChild(graypredefined);
+
   predefindeds.push(position);
 };
+
+document.addEventListener('DOMContentLoaded', function () {
+  const startButton = document.getElementById('recognitonStart');
+  
+  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
+  recognition.continuous = true;
+  recognition.lang = 'ko-KR'; // 언어 설정 (영어)
+
+  // 음성 인식 시작 이벤트 리스너
+  startButton.addEventListener('click', function() {
+      recognition.start();
+  });
+  // 결과 이벤트 리스너
+  recognition.onresult = function(event) {
+    const result = event.results[0][0].transcript;
+    resultElement.textContent = '인식된 텍스트: ' + result;
+    console.log(result);
+    console.log(result[0]); 
+    console.log(result[1]); 
+    console.log(result[2]); 
+    console.log(result[3]); 
+    console.log(result[4]); 
+    console.log(result.length);
+};
+})
+
 
 let currentDirection = "E";
 const direction = ["N", "E", "S", "W"];
@@ -193,6 +264,7 @@ function findColor(locateColor) {
     }
   }
 }
+
 function findHazard(locateHazard) {
   if (locateHazard.length !== 0) {
     let newHazard = document.createElement("img");
@@ -210,7 +282,20 @@ function findHazard(locateHazard) {
 function visitied(fin) {
   // console.log(fin);
   if (fin === "Yes") {
-    alert("탐색 완료!");
+    let newpredefined = document.createElement("img");
+    newpredefined.className = "item";
+    newpredefined.src = "./includes/predefined.png";
+    let top = 50 + rows * 78 - (parseInt(current_y)) * 78;
+    let left = parseInt(current_x) * 78 + 30;
+    console.log("top: " + top);
+    console.log("left: " + left);
+    console.log("current_x: " + current_x);
+    console.log("current_y: " + current_y);
+    newpredefined.style.top = top + "px";
+    newpredefined.style.left = left + "px";
+    document.getElementById("tableContainer").appendChild(newpredefined);
+    alert("탐색 완료!")
+
   }
 }
 
