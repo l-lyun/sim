@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   // 결과 이벤트 리스너
   recognition.onresult = function(event) {
-    const result = event.results[0][0].transcript;
+    const result = eventresults[0][0].transcript;
     resultElement.textContent = '인식된 텍스트: ' + result;
     console.log(result);
     console.log(result[0]); 
@@ -156,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 let currentDirection = "E";
+let gogoInterval; 
 const direction = ["N", "E", "S", "W"];
 document.getElementById("moveButton").addEventListener("click", async () => {
   try {
@@ -163,7 +164,7 @@ document.getElementById("moveButton").addEventListener("click", async () => {
       n: parseInt(cols),
       m: parseInt(rows),
       startSpot: `${robotPosition[0]}, ${robotPosition[1]}`, // 여기 수정
-      startDirection: "E",
+      startDirection: currentDirection,
       hazards: hazardsParsed,
       colorBlobs: colorBlobsParsed, // 여기 수정
       endSpot: predefindedsParsed,
@@ -196,7 +197,7 @@ document.getElementById("moveButton").addEventListener("click", async () => {
 
       // 원하는 작업 수행
       // ...
-      gogo(finalInfo);
+      startGogo(finalInfo);
     } else {
       console.error("Error during POST Request. HTTP Status:", response.status);
     }
@@ -205,7 +206,9 @@ document.getElementById("moveButton").addEventListener("click", async () => {
   }
 });
 
-function gogo(finalInfo) {
+
+
+function startGogo(finalInfo) {
   for (let i = 0; i < finalInfo.length; i++) {
     let row = finalInfo[i][0];
     let col = finalInfo[i][1];
@@ -247,6 +250,7 @@ function move(next_row, next_col) {
   current_y = parseInt(next_col);
 }
 function rotate(direction) {
+  // currentDirection = direction;
   robot.src = `./includes/robot_${direction}.jpeg`;
 }
 
