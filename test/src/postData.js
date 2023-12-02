@@ -2,19 +2,25 @@ import { globalData, coordinates } from "./globalData.js";
 import { findPath } from "./path.js";
 
 
+// post 함수
 export async function postData() {
+  // 객체 데이터 보내는 더미
   try {
     const requestPayload = {
+      // 맵 크기
       n: parseInt(globalData.cols),
-      m: parseInt(globalData.rows),
-      startSpot: `${globalData.current_x}, ${globalData.current_y}`, // 여기 수정
+      m: parseInt(globalData.rows), 
+      // 현재 위치
+      startSpot: `${globalData.current_x}, ${globalData.current_y}`, 
+      // 현재 방향
       startDirection: globalData.currentDirection,
+      // 지점들 위치
       hazards: coordinates.hazardsParsed,
-      colorBlobs: coordinates.colorBlobsParsed, // 여기 수정
+      colorBlobs: coordinates.colorBlobsParsed,
       endSpot: coordinates.predefindedsParsed,
     };
-    console.log(coordinates.hazardsParsed);
-    console.log(JSON.stringify(requestPayload));
+    console.log(JSON.stringify(requestPayload)); // 백에서 받은 json 확인용 콘솔 출력
+    // post
     const response = await fetch("http://localhost:8080/robot/move", {
       method: "POST",
       headers: {
@@ -23,12 +29,16 @@ export async function postData() {
       body: JSON.stringify(requestPayload),
     });
 
+    // 데이터 잘 왔으면
     if (response.ok) {
-      // 서버에서 받은 데이터 활용 예시
+      // json 파싱
       const responseData = await response.json();
       const finalInfo = responseData.finalInfo;
-      console.log(finalInfo);
+      console.log(finalInfo); // 확인 출력용
+      
+      // 경로 탐색 함수 실행
       findPath(finalInfo);
+      // 에러 체크들
     } else {
       console.error("Error during POST Request. HTTP Status:", response.status);
     }

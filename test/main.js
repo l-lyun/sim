@@ -1,49 +1,75 @@
-import { createTable } from './createTable.js';
-// import { colorDictionary, hazardDictionary, digitDictionary } from './recogitionDictionary.js';
-import {setRobotPosition} from './makeSpot.js';
-import { globalData } from './globalData.js';
-import { colorSpot, hazardSpot, predefinedSpot } from './checkCoordinate.js';
-import { recognitionStart } from './recognition.js';
-import { postData } from './postData.js';
+import { createTable } from './src/createTable.js';
+import {setRobotPosition} from './src/makeSpot.js';
+import { globalData } from './src/globalData.js';
+import { colorSpot, hazardSpot, predefinedSpot } from './src/checkCoordinate.js';
+import { recognitionStart } from './src/recognition.js';
+import { postData } from './src/postData.js';
 
+// 지도 생성 누르면 createTable 함수 실행시키는 객체
 document.getElementById("createTable").addEventListener("click", createTable);
+// 로봇 위치 설정 누르면 초기 로봇 위치 설정 객체
 document.getElementById("setRobotPosition").addEventListener("click", function () {
-  let robotPosition = document
+ // 좌표 파싱
+  let robotPosition = document 
     .getElementById("robotPositionInput")
     .value.split(",");
     globalData.current_x = parseInt(robotPosition[0]);
     globalData.current_y = parseInt(robotPosition[1]);
+    // 로봇 맵에 띄우기
     setRobotPosition(globalData.current_x, globalData.current_y);
   });
 
+
+  // 아래 다 같은 방식
+  // colorblob 추가 누르면 실행되는 객체
   document.getElementById("placeColorblob").addEventListener("click", function () {
+    // 좌표 파싱
     let position = document
     .getElementById("colorblobInput")
     .value.split(",");
+    // 백에 데이터 보내주기 위한 파싱, 회색 이미지 띄우는 함수
     colorSpot(position);
   });
 
+  // hazard 추가 누르면 실행
   document.getElementById("placeHazard").addEventListener("click", function () {
+    // 좌표 파싱
     let position = document
     .getElementById("hazardInput")
     .value.split(",");
+    // 백에 데이터 보내주기 위한 파싱, 회색 이미지 띄우는 함수
     hazardSpot(position);
   });
   
+  // predefined 추가 누르면 실행
   document.getElementById("placePredefined").addEventListener("click", function () {
+    // 좌표 파싱
     let position = document
     .getElementById("predefinedInput")
     .value.split(",");
+    // 백에 데이터 보내주기위한 파싱, 회색 이미지 띄우는 함수
     predefinedSpot(position);
   });
+  
 
+  
+  // 음성 인식 시작 누르면 시작되는 객체
   document.getElementById("recognitionStart").addEventListener("click", function () {
+    // 음성 인식 시작
     recognitionStart();
   });
  
+  // 로봇 이동 누르면 시작되는 객체 
+  // 백에 데이터 post, 결과 바탕 움직임
   document.getElementById("moveButton").addEventListener("click", function () {
     postData();
   });
+
+
+
+
+
+
 
   
   // function createTable()  {
