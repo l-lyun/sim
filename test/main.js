@@ -6,7 +6,6 @@ let robotStartRow;
 let current_x;
 let current_y;
 let visitCnt = 0; 
-let myvisitCnt = 0;
 const createTable = () => {
   // 행 열 입력
   rows = document.getElementById("colInput").value;
@@ -34,11 +33,8 @@ const setRobotPosition = () => {
   robotPosition = document
     .getElementById("robotPositionInput")
     .value.split(",");
-  // console.log("set_robot");
   current_x = parseInt(robotPosition[0]);
   current_y = parseInt(robotPosition[1]);
-  // console.log("1_x: " + current_x);
-  // console.log("1_y: " + current_y);
   // 좌표 픽셀로 파싱
   let top = 50 + rows * 78 - parseInt(robotPosition[1]) * 78;
   let left = parseInt(robotPosition[0]) * 78 + 30;
@@ -304,10 +300,10 @@ function startGogo(finalInfo) {
       findColor(locateColor);
       rotate(cu_direction);
       move(row, col);
-      myvisitCnt = visitied(fin, myvisitCnt);
-
+      visitied(fin);
       i++;
     } else {
+      alert("탐색 완료!");
       clearInterval(gogoInterval); // 모든 동작이 완료되면 interval 정지
     }
   }, 1500);
@@ -357,8 +353,7 @@ function findHazard(locateHazard) {
   }
 }
 
-function visitied(fin, myvisitCnt) {
-  console.log(myvisitCnt);
+function visitied(fin) {
   // console.log(fin);
   if (fin === "Yes") {
     let newpredefined = document.createElement("img");
@@ -369,11 +364,5 @@ function visitied(fin, myvisitCnt) {
     newpredefined.style.top = top + "px";
     newpredefined.style.left = left + "px";
     document.getElementById("tableContainer").appendChild(newpredefined);
-    myvisitCnt++;
   }
-
-  if (visitCnt == myvisitCnt) {
-    alert("탐색 완료!");
-  }
-  return myvisitCnt;
 }
