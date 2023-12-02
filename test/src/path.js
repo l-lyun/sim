@@ -115,7 +115,7 @@ function visitied(fin) {
     let left = parseInt(globalData.current_x) * 78 + 30;
     newpredefined.style.top = top + "px";
     newpredefined.style.left = left + "px";
-    coordinates.predefindedsParsed = coordinates.predefindedsParsed.filter(item => item !== `${globalData.current_x}, ${globalData.current_y}`);
     document.getElementById("tableContainer").appendChild(newpredefined);
+    coordinates.predefindedsParsed = coordinates.predefindedsParsed.filter(item => item !== `${globalData.current_x}, ${globalData.current_y}`);
   }
 }
