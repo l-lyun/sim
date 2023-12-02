@@ -1,5 +1,5 @@
 
-import { globalData } from "./globalData.js";
+import { globalData, coordinates } from "./globalData.js";
 export let findPathInterval;
 
 // 경로 탐색 함수
@@ -105,6 +105,7 @@ function findHazard(locateHazard) {
 
 // 목적지 방문했을 때
 function visitied(fin) {
+  console.log(coordinates.predefindedsParsed);
   if (fin === "Yes") {
     // 이미지 띄우고 파싱
     let newpredefined = document.createElement("img");
@@ -114,6 +115,7 @@ function visitied(fin) {
     let left = parseInt(globalData.current_x) * 78 + 30;
     newpredefined.style.top = top + "px";
     newpredefined.style.left = left + "px";
+    coordinates.predefindedsParsed = coordinates.predefindedsParsed.filter(item => item !== `${globalData.current_x}, ${globalData.current_y}`);
     document.getElementById("tableContainer").appendChild(newpredefined);
   }
 }

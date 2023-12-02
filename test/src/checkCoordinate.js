@@ -30,6 +30,3 @@ export function predefinedSpot(position) {
    // 이미지 회색 띄우기
   newPlacePredefined(position);
 }
-
-// colorBlobsParsed = colorBlobs_coordinate.map((colorBlobs_coordinate) =>
-//     colorBlobs_coordinate.join(", ")
