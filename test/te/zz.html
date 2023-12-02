@@ -1,0 +1,23 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modularized Example</title>
+  <link rel="stylesheet" href="aa.css" />
+</head>
+<body>
+
+  <!-- 버튼과 입력 필드 -->
+  <button id="createTableButton">Create Table</button>
+  <input type="text" id="colInput" placeholder="Enter number of columns">
+  <input type="text" id="rowInput" placeholder="Enter number of rows">
+  <div id="tableContainer"></div>
+  <!-- 모듈화된 JavaScript 파일 로드 -->
+  <script type="module" src="./main.js"></script>
+  <script type="module" src="./createTable.js"></script>
+  <div id="tableContainer"></div>
+</body>
+</html>
