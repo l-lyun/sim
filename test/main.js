@@ -5,6 +5,8 @@ let robotStartCol;
 let robotStartRow;
 let current_x;
 let current_y;
+let visitCnt = 0; 
+let myvisitCnt = 0;
 const createTable = () => {
   // 행 열 입력
   rows = document.getElementById("colInput").value;
@@ -111,33 +113,11 @@ function placeHazard() {
   newPlaceHazard(position);
 }
 
-// const placeHazard = () => {
-//   let position = document.getElementById("hazardInput").value.split(",");
-//   hazards_coordinate.push(position);
-//   hazardsParsed = hazards_coordinate.map((hazards_coordinate) =>
-//     hazards_coordinate.join(", ")
-//   );
-
-//   let grayHazard = document.createElement("img");
-//   grayHazard.className = "item";
-//   grayHazard.src = "./includes/hazard_gray.png";
-
-//   // 좌표를 픽셀 단위로 변환합니다.
-//   let top = 50 + rows * 78 - parseInt(position[1]) * 78;
-//   let left = parseInt(position[0]) * 78 + 30;
-
-//   // colorblob의 위치를 설정합니다.
-//   grayHazard.style.top = top + "px";
-//   grayHazard.style.left = left + "px";
-//   document.getElementById("tableContainer").appendChild(grayHazard);
-
-//   hazards.push(position);
-// };
-
 let predefindeds = [];
 let predefindeds_coordinate = [];
 let predefindedsParsed = [];
 const placePredefined = () => {
+  visitCnt++;
   let position = document.getElementById("predefinedInput").value.split(",");
   predefindeds_coordinate.push(position);
   console.log(position);
@@ -175,13 +155,6 @@ document
     recognition.onresult = function (event) {
       const result = event.results[0][0].transcript;
       recognitionParse(result);
-      // console.log(result);
-      // console.log(result[0]);
-      // console.log(result[1]);
-      // console.log(result[2]);
-      // console.log(result[3]);
-      // console.log(result[4]);
-      // console.log(result.length);
     };
   });
 
@@ -246,6 +219,7 @@ function checkRecognition(recognitionParse) {
 
 function recognitionParse(result) {
   let resultParse = [];
+  let resultFinish = [];
   console.log("result: " + result);
   for (let i = 0; i < result.length; i++) {
     if (result[i] !== " ") {
@@ -260,7 +234,10 @@ function recognitionParse(result) {
       resultParse[3] = String(i);
     }
   }
-  checkRecognition(resultParse);
+  for (let i = 0; i < 4; i++) {
+    resultFinish.push(resultParse[i]);
+  }
+  checkRecognition(resultFinish);
 }
 
 document
@@ -284,13 +261,6 @@ async function postData() {
       hazards: hazardsParsed,
       colorBlobs: colorBlobsParsed, // 여기 수정
       endSpot: predefindedsParsed,
-      // "n": 6,
-      // "m": 5,
-      // "startSpot": "0, 0",
-      // "startDirection": "N",
-      // "hazards": ["3, 3", "3, 2", "1, 2"],
-      // "colorBlobs": ["4, 3", "2, 2"],
-      // "endSpot": ["3, 4", "0, 1"]
     };
     console.log(hazardsParsed);
     console.log(JSON.stringify(requestPayload));
@@ -307,13 +277,6 @@ async function postData() {
       const responseData = await response.json();
       const finalInfo = responseData.finalInfo;
       console.log(finalInfo);
-      // 예시: finalInfo 데이터를 콘솔에 출력
-      // finalInfo.forEach(info => {
-      //   console.log('Info:', info);
-      // });
-
-      // 원하는 작업 수행
-      // ...
       startGogo(finalInfo);
     } else {
       console.error("Error during POST Request. HTTP Status:", response.status);
@@ -324,59 +287,9 @@ async function postData() {
 }
 document.getElementById("moveButton").addEventListener("click", postData);
 
-// document.getElementById("moveButton").addEventListener("click", async () => {
-//   try {
-//     const requestPayload = {
-//       n: parseInt(cols),
-//       m: parseInt(rows),
-//       startSpot: `${robotPosition[0]}, ${robotPosition[1]}`, // 여기 수정
-//       startDirection: currentDirection,
-//       hazards: hazardsParsed,
-//       colorBlobs: colorBlobsParsed, // 여기 수정
-//       endSpot: predefindedsParsed,
-//       // "n": 6,
-//       // "m": 5,
-//       // "startSpot": "0, 0",
-//       // "startDirection": "N",
-//       // "hazards": ["3, 3", "3, 2", "1, 2"],
-//       // "colorBlobs": ["4, 3", "2, 2"],
-//       // "endSpot": ["3, 4", "0, 1"]
-//     };
-//     console.log(JSON.stringify(requestPayload));
-//     const response = await fetch("http://localhost:8080/robot/move", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(requestPayload),
-//     });
-
-//     if (response.ok) {
-//       // 서버에서 받은 데이터 활용 예시
-//       const responseData = await response.json();
-//       const finalInfo = responseData.finalInfo;
-//       console.log(finalInfo);
-//       // 예시: finalInfo 데이터를 콘솔에 출력
-//       // finalInfo.forEach(info => {
-//       //   console.log('Info:', info);
-//       // });
-
-//       // 원하는 작업 수행
-//       // ...
-//       startGogo(finalInfo);
-//     } else {
-//       console.error("Error during POST Request. HTTP Status:", response.status);
-//     }
-//   } catch (error) {
-//     console.error("Error during POST Request:", error);
-//   }
-// });
-// document.getElementById("recognitionStart").addEventListener("click", () => {
-//   clearInterval(intervalId); // 추가된 부분: gogo 함수 실행 중지
-// });
-
 function startGogo(finalInfo) {
   let i = 0;
+  
   gogoInterval = setInterval(() => {
     if (i < finalInfo.length) {
       let row = finalInfo[i][0];
@@ -391,25 +304,14 @@ function startGogo(finalInfo) {
       findColor(locateColor);
       rotate(cu_direction);
       move(row, col);
-      visitied(fin);
+      myvisitCnt = visitied(fin, myvisitCnt);
 
       i++;
     } else {
       clearInterval(gogoInterval); // 모든 동작이 완료되면 interval 정지
     }
-  }, 1000);
+  }, 1500);
 }
-
-// let row = finalInfo[0][0];
-// console.log(parseInt(row));
-// let col = finalInfo[1];
-// let cu_direction = finalInfo[2];
-// let locateHazard = finalInfo[4];
-// let fin = finalInfo[5];
-// visitied(fin);
-// findHazard(locateHazard);
-// rotate(cu_direction);
-// move(row, col);
 
 function move(next_row, next_col) {
   let top = parseInt(robot.style.top);
@@ -455,7 +357,8 @@ function findHazard(locateHazard) {
   }
 }
 
-function visitied(fin) {
+function visitied(fin, myvisitCnt) {
+  console.log(myvisitCnt);
   // console.log(fin);
   if (fin === "Yes") {
     let newpredefined = document.createElement("img");
@@ -466,104 +369,11 @@ function visitied(fin) {
     newpredefined.style.top = top + "px";
     newpredefined.style.left = left + "px";
     document.getElementById("tableContainer").appendChild(newpredefined);
+    myvisitCnt++;
+  }
+
+  if (visitCnt == myvisitCnt) {
     alert("탐색 완료!");
   }
+  return myvisitCnt;
 }
-
-// }
-// const moveRobot = () => {
-//     // console.log(currentDirection);
-//     // let robot = document.getElementById('robot');
-//     // let targetDirection = document.getElementById('directionInput').value.toUpperCase();
-//     let top = parseInt(robot.style.top) || 50;
-//     let left = parseInt(robot.style.left) || 30;
-//     // let toMove = (direction.indexOf(targetDirection) - direction.indexOf(currentDirection) + 4) % 4;
-//     // changeImage();
-//     // function changeImage() {
-//     //     robot.src = `./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.png`;
-//     //     console.log(`./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.png`);
-//     // }
-
-//     // for(let i = 1; i <= toMove; i++) {
-//     //     robot.src = `./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.jpeg`;
-//     //     console.log(`./includes/robot_${direction[(direction.indexOf(currentDirection) + i) % 4]}.jpeg`);
-//     // }
-//     // await rotateRobot(toMove * 90); // 비동기로 회전 적용
-
-//     switch (targetDirection) {
-//         case 'N':
-//             robot.style.top = (top - 78) + 'px';
-//             // robot.src = './includes/robot_N.png';
-//             break;
-//         case 'E':
-//             robot.style.left = (left + 78) + 'px';
-//             // robot.src = './includes/robot_E.png';
-//             break;
-//         case 'W':
-//             robot.style.left = (left - 78) + 'px';
-//             // robot.src = './includes/robot_W.png';
-//             break;
-//         case 'S':
-//             robot.style.top = (top + 78) + 'px';
-//             // robot.src = './includes/robot_S.png';
-//             break;
-//     }
-
-//     currentDirection = targetDirection;
-//     console.log(currentDirection);
-//     isVisitedPredefined();
-
-//     if (!predefinedVisited && isVisitedAllPredefindeds()) {
-//         alert('탐색 완료!');
-//         predefinedVisited = true;
-//     }
-// };
-
-// const rotateRobot = (totalAngle) => {
-// return new Promise((resolve) => {
-//     let robot = document.getElementById('robot');
-//     let currentAngle = 0;
-
-//     const rotateStep = () => {
-//         if (currentAngle < totalAngle) {
-//             currentAngle += 10; // 10도씩 회전
-//             robot.style.transform = `rotate(${currentAngle}deg)`;
-//             setTimeout(rotateStep, 10); // 10ms 간격으로 회전
-//         } else {
-//             resolve();
-//         }
-//     };
-
-//     rotateStep();
-// });
-// };
-
-// const isVisitedAllPredefindeds = () => {
-//   // 모든 predefined 방문
-//   for (let predefined of predefindeds) {
-//       if (predefined.dataset.visited === 'false') {
-//           return false;
-//       }
-//   }
-//   return true;
-// }
-
-// const isVisitedPredefined = () => {
-//   let robot = document.getElementById('robot');
-
-//   // 로봇과 모든 predefined의 위치가 겹치는지 확인합니다.
-//   let robotTop = parseInt(robot.style.top) || 0;
-//   let robotLeft = parseInt(robot.style.left) || 0;
-
-//   for (let predefined of predefindeds) {
-//       let predefinedTop = parseInt(predefined.style.top) || 0;
-//       let predefinedLeft = parseInt(predefined.style.left) || 0;
-
-//       if (robotTop === predefinedTop && robotLeft === predefinedLeft) {
-//           // 방문한 predefined의 방문 여부를 true로 설정합니다.
-//           predefined.dataset.visited = 'true';
-//           return true;
-//       }
-//   }
-//   return false;
-// }
