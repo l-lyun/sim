@@ -21,6 +21,9 @@ const digitDictionary = [
   "십",
 ];
 
+  // 음성 인식 객체
+const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
 // 음성 인식 정지하는 함수
 export function recognitionStop() {
   recognition.stop();
@@ -28,8 +31,6 @@ export function recognitionStop() {
 
 // 음성인식 시작 버튼 누르면 함수 실행
 export function recognitionStart() {
-  // 음성 인식 객체
-  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
       // 음성 인식 시작 누르면 clearInterval이라는 내장함수 실행시켜서 로봇 동작 중지
       // findPathInterval 가서 보면 대충 이해될 것
       clearInterval(findPathInterval); 
@@ -57,11 +58,9 @@ export function recognitionStart() {
 
 // 음성 인식 결과 파싱 result: 음성인식 결과 문자
 function recognitionParse(result) {
-  // 1차 파싱
+  // 파싱
   let resultParse = [];
-  // 2차파싱
   let resultFinish = [];
-
   // 결과 길이만큼 포문 시작
   for (let i = 0; i < result.length; i++) {
     // 일단 문자열에서 띄어쓰기 아니면 1차 파싱 배열에 푸시
@@ -82,7 +81,7 @@ function recognitionParse(result) {
       resultParse[3] = String(i);
     }
   }
-  // 제대로 파싱된거 다시 2차배열에 푸시 근데 왜했는지 모르겠음 일단 냅두겠음,,
+  // 뒤 입력 다 짜르고 4개만 받기
   for (let i = 0; i < 4; i++) {
     resultFinish.push(resultParse[i]);
   }

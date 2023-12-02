@@ -9,11 +9,8 @@ let globalData = {
 }
 
 let coordinates = {
-  colorBlobs_coordinate: [], // colorblob 좌표 입력 받는대로 들어가는 곳
   colorBlobsParsed: [], // colorblob 좌표 파싱해서 들어가는 곳 2,1 입력 받으면 2, 1 로 파싱
-  hazards_coordinate: [],
   hazardsParsed: [],
-  predefindeds_coordinate: [],
   predefindedsParsed: [],
 }
 

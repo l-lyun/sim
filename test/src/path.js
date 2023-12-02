@@ -1,5 +1,5 @@
-
 import { globalData, coordinates } from "./globalData.js";
+import {createAndPositionItem } from "./makeSpot.js"
 export let findPathInterval;
 
 // 경로 탐색 함수
@@ -73,15 +73,10 @@ function findColor(locateColor) {
   if (locateColor.length !== 0) {
     // "3, 2 3, 4" 이렇게 오니까 5번째마다 컬러블롭 좌표 x값 시작
     for (let i = 0; i < locateColor.length; i += 5) {
-      // 이미지 좌표 파싱하고 띄우기
-      let newColor = document.createElement("img");
-      newColor.className = "item";
-      newColor.src = "./includes/color.png";
-      let top = 50 + globalData.rows * 78 - parseInt(locateColor[i + 2]) * 78;
-      let left = parseInt(locateColor[i]) * 78 + 30;
-      newColor.style.top = top + "px";
-      newColor.style.left = left + "px";
-      document.getElementById("tableContainer").appendChild(newColor);
+      //이미지 좌표 파싱하고 띄우기
+      // let newColor = document.createElement("img");
+      let position = [locateColor[i], locateColor[i + 2]];
+      createAndPositionItem("./includes/color.png", position);
     }
   }
 }
@@ -91,15 +86,8 @@ function findHazard(locateHazard) {
   // hazard는 한개씩밖에 못봐서 있거나 없거나 둘중 하나 있으면 "3, 2" 없으면 빈문자열
   if (locateHazard.length !== 0) {
     // 이미지 좌표 파싱하고 띄우기
-    let newHazard = document.createElement("img");
-    newHazard.className = "item";
-    newHazard.src = "./includes/hazard.png";
-    let top = 50 + globalData.rows * 78 - parseInt(locateHazard[2]) * 78;
-    let left = parseInt(locateHazard[0]) * 78 + 30;
-
-    newHazard.style.top = top + "px";
-    newHazard.style.left = left + "px";
-    document.getElementById("tableContainer").appendChild(newHazard);
+    let position = [locateHazard[0], locateHazard[2]];
+    createAndPositionItem("./includes/hazard.png", position);
   }
 }
 
@@ -107,15 +95,8 @@ function findHazard(locateHazard) {
 function visitied(fin) {
   console.log(coordinates.predefindedsParsed);
   if (fin === "Yes") {
-    // 이미지 띄우고 파싱
-    let newpredefined = document.createElement("img");
-    newpredefined.className = "item";
-    newpredefined.src = "./includes/predefined.png";
-    let top = 50 + globalData.rows * 78 - parseInt(globalData.current_y) * 78;
-    let left = parseInt(globalData.current_x) * 78 + 30;
-    newpredefined.style.top = top + "px";
-    newpredefined.style.left = left + "px";
-    document.getElementById("tableContainer").appendChild(newpredefined);
-    coordinates.predefindedsParsed = coordinates.predefindedsParsed.filter(item => item !== `${globalData.current_x}, ${globalData.current_y}`);
+      let position = [globalData.current_x, globalData.current_y];
+      createAndPositionItem("./includes/predefined.png", position);
+      coordinates.predefindedsParsed = coordinates.predefindedsParsed.filter(item => item !== `${globalData.current_x}, ${globalData.current_y}`);
   }
 }

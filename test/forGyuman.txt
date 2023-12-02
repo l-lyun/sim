@@ -1,0 +1,76 @@
+
+화살표 함수 별 신경 안써도됨
+
+const getElementValue = (elementId) => {};
+function getElementValue(elementId) {}; 
+두개 같은거 js에서 this 쓸 때 차이 있는데 우리 코드에선 상관 없음 앞으로 다 인지부탁드려용
+
+근데 왜 썼냐? gpt가 씀;
+
+
+main.js가 첫 화면 관리
+
+버튼클릭은 전부 handleButtonClick에서 html 태그 id매개변수 따라 각자 함수 동작
+
+지점들 좌표 찍기
+handleButtonClick에서 버튼 누르는거 탐지에서 시작
+
+
+0. 전역변수 -> globalData.js
+1) globalData 객체
+  post할 데이터들 유지
+
+2) coordinate 객체
+  post할 좌표들 유지
+
+1. 지도 생성
+createTable()
+
+2. 지점들
+  1) robot일경우
+  parseAndSetRobotPosition() -> setRobotPosition()
+  위치 업데이트 -> 지점찍는 역할
+
+  2) colorblob
+  colorSpot()에서 파싱 -> newPlaceColorblob(파싱좌표) 여기서 전역변수 parsed들 업데이트 
+   -> createAndPositionItem(이미지경로, 좌표)에서 지점생성
+  3) hazard
+  hazardSpot()에서 파싱 -> newPlaceHazard(파싱좌표) 여기서 전역변수 parsed들 업데이트 
+   -> createAndPositionItem(이미지경로, 좌표)에서 지점생성
+  4) predefined
+  predefinedSpot()에서 파싱 -> newPredefinedHazard(파싱좌표) 여기서 전역변수 parsed들 업데이트 
+   -> createAndPositionItem(이미지경로, 좌표)에서 지점생성
+
+
+3. 음성인식 음성인식 시작 클릭 recognition()시작
+-> recognition.js
+  dictionary 배열들은 글자 체크용 코드 읽어보면 느낌 올거임
+
+  음성인식 객체
+  const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
+  recognitionStart()
+  - 음성인식 정지 버튼은 recognitionStart() 에서 관리
+
+  recognition.start() 음성인식 시작
+
+  여기서 정지 버튼 관리, 정지 버튼 누르면 recognition.stop() 동작
+  document
+      .getElementById("recognitionStop")
+      .addEventListener("click", function () {
+        recognition.stop();
+      });
+
+  이게 정지 함수
+  export function recognitionStop() {
+    recognition.stop();
+  }
+
+  음성인식 파싱 주석 읽으시면 이해될듯
+  recognitionParse()
+
+  음성인식 데이터 결과 출력
+  recognitionSpot()
+
+4. 로봇 이동 클릭시 postData()
+그냥 전역변수들로 포스트 합니다
