@@ -48,7 +48,7 @@ export function recognitionStart() {
         recognitionParse(result);
         console.log(result);
       };  
-      
+
       // 음성 인식 정지 버튼 누르면 함수 호출
       document
       .getElementById("recognitionStop")
@@ -57,7 +57,7 @@ export function recognitionStart() {
       });
 }
 
-// 음성 인식 결과 파싱 result: 음성인식 결과 문자
+// 음성 인식 결과 파싱 result 음성인식 결과 문자
 function recognitionParse(result) {
   // 파싱
   let resultParse = [];
