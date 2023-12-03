@@ -43,7 +43,7 @@ createTable()
 
 
 3. 음성인식 음성인식 시작 클릭 recognition()시작
--> recognition.js
+-> recognition.js 여기 파일은 위에서부터 함수대로 순서대로
   dictionary 배열들은 글자 체크용 코드 읽어보면 느낌 올거임
 
   음성인식 객체
@@ -51,6 +51,8 @@ createTable()
 
   recognitionStart()
   - 음성인식 정지 버튼은 recognitionStart() 에서 관리
+  
+  clearInerval() 함수는 findpathInterval 타고 가서 setInterval 멈춤
 
   recognition.start() 음성인식 시작
 
@@ -67,10 +69,36 @@ createTable()
   }
 
   음성인식 파싱 주석 읽으시면 이해될듯
-  recognitionParse()
+  recognitionParse() 
 
   음성인식 데이터 결과 출력
   recognitionSpot()
 
-4. 로봇 이동 클릭시 postData()
+4. 로봇 이동 클릭시 postData() -> findPath(파싱 json)
 그냥 전역변수들로 포스트 합니다
+
+움직이는 과정이 버튼 클릭 -> postData() -> findPath()
+음성인식 시작 누르면 clearInterval(findPathInterval); 호출돼서 움직임 멈춤
+
+
+findPath(파싱된 json) 
+변수들에 json 값들 짤라서 넣음
+findPathInterval = setInterval(( => {})) -> 실제 움직이는 과정
+걍 포문임 도는 동안 i값 체크하면서 반복임
+
+findHazard -> findcolor -> rotate -> move -> visitied 순
+
+move(next_row, next_col) {} 
+다음 위치: json으로 들어오는 매개변수
+현재 위치: 전역 변수
+다음 위치 - 현재 위치로 픽셀 옮기고
+전역 변수 = 다음 위치 
+
+rotate(direction) {}
+json 에서 받은 direction으로 전역변수 direction 업데이트, 이미지 바꿈
+
+findColor(locateColor) -> createAndPositionItem
+컬ㄹ러블롭 찾으면 createAndPositionItem 함수호출
+
+findHazard, visited 같은 논리
+visitied 마지막 줄은 방문한 목적지 빼내는것
