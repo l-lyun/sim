@@ -2,8 +2,15 @@ import { globalData } from "./globalData.js";
 
 export function createTable()  {
   // 행 열 입력
-  globalData.rows = document.getElementById("colInput").value;
-  globalData.cols = document.getElementById("rowInput").value;
+  const position = document.getElementById("mapInput").value;
+  let positionParse = [];
+  for (let i = 0; i < position.length; i++) {
+    if (!isNaN(position[i]) && position[i] !== ' ') {
+        positionParse.push(position[i]);
+    }
+  }
+  globalData.rows = parseInt(positionParse[1]);
+  globalData.cols = parseInt(positionParse[0]);
 
   // 맵 생성
   let table = document.createElement("table");

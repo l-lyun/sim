@@ -35,7 +35,10 @@ export async function postData() {
       const responseData = await response.json();
       const finalInfo = responseData.finalInfo;
       console.log(finalInfo); // 확인 출력용
-      
+      if(finalInfo.length > 150) {
+        alert('경로가 존재하지 않습니다.');
+        return;
+      }
       // 경로 탐색 함수 실행
       findPath(finalInfo);
       // 에러 체크들

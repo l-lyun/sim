@@ -9,6 +9,7 @@ import {
 let colorBlobsCoordinate = [];
 export function colorSpot(position) {
   // 백에 보내주기 위한 형식으로 파싱
+  console.log(position);
   colorBlobsCoordinate.push(position);
   coordinates.colorBlobsParsed = colorBlobsCoordinate.map(
     (coord) => coord.join(", ")

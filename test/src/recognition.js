@@ -46,6 +46,7 @@ export function recognitionStart() {
       recognition.onresult = function (event) {
         const result = event.results[0][0].transcript;
         recognitionParse(result);
+        console.log(result);
       };  
       
       // 음성 인식 정지 버튼 누르면 함수 호출
@@ -92,7 +93,6 @@ function recognitionParse(result) {
 // 음성인식 데이터 최종 검사
 function checkRecognition(recognitionParse) {
   // 콘솔에 음성인식 데이터 출력
-  console.log(recognitionParse);
 
   // 문자열 길이가 4 아니면 종료
   if (recognitionParse.length === 4) {

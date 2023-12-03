@@ -93,7 +93,6 @@ function findHazard(locateHazard) {
 
 // 목적지 방문했을 때
 function visitied(fin) {
-  console.log(coordinates.predefindedsParsed);
   if (fin === "Yes") {
       let position = [globalData.current_x, globalData.current_y];
       createAndPositionItem("./includes/predefined.png", position);
